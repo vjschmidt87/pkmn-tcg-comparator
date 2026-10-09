@@ -1,0 +1,87 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+.collections-page {
+  &__container {
+    @include m.content-container;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: v.$space-10;
+  }
+
+  &__title {
+    font-size: v.$font-size-3xl;
+    font-weight: v.$font-weight-bold;
+    margin-bottom: v.$space-3;
+  }
+
+  &__subtitle {
+    color: var(--color-text-secondary);
+    font-size: v.$font-size-md;
+  }
+
+  &__loading {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-style: italic;
+    padding: v.$space-16 0;
+  }
+}
+
+.set-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: v.$space-4;
+  list-style: none;
+}
+
+.set-card {
+  @include m.card-surface;
+  @include m.flex-between;
+  padding: v.$space-4 v.$space-5;
+  cursor: pointer;
+  transition: box-shadow v.$transition-fast, transform v.$transition-fast, border-color v.$transition-fast;
+  gap: v.$space-4;
+
+  &:hover {
+    box-shadow: v.$shadow-md;
+    transform: translateY(-2px);
+    border-color: var(--color-primary);
+  }
+
+  &__logo {
+    height: 40px;
+    object-fit: contain;
+    flex-shrink: 0;
+    max-width: 100px;
+  }
+
+  &__info {
+    @include m.flex-column;
+    gap: v.$space-1;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__name {
+    font-weight: v.$font-weight-semibold;
+    font-size: v.$font-size-sm;
+    @include m.truncate;
+  }
+
+  &__meta {
+    font-size: v.$font-size-xs;
+    color: var(--color-text-muted);
+    font-family: v.$font-mono;
+  }
+
+  &__symbol {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+}

@@ -1,0 +1,190 @@
+<section class="prices-page">
+  <div class="prices-page__container">
+    <button class="back-btn" (click)="goBack()">← Back to Search</button>
+
+    <!-- Card info header -->
+    <div class="card-hero">
+      @if (cardImage()) {
+        <img class="card-hero__img" [src]="cardImage()" [alt]="cardName()" />
+      }
+      <div class="card-hero__details">
+        <h1 class="card-hero__name">{{ cardName() }}</h1>
+        @if (setName()) {
+          <p class="card-hero__meta">{{ setName() }} · #{{ cardNumber() }}</p>
+        }
+      </div>
+    </div>
+
+    <!-- Live prices section -->
+    <div class="live-prices">
+      <h2 class="section-title">Live Prices</h2>
+
+      @if (loadingLive()) {
+        <div class="loading-state">
+          <span class="loading-state__spinner"></span>
+          Fetching live prices…
+        </div>
+      } @else if (!cardId()) {
+        <p class="unavailable-note">Card ID not available — live prices require a card selection from search.</p>
+      } @else if (!hasLivePrices()) {
+        <p class="unavailable-note">No live price data available for this card.</p>
+      } @else {
+        <div class="live-prices__grid">
+
+          <!-- TCGPlayer panel -->
+          @if (tcgVariants().length > 0) {
+            <div class="price-panel">
+              <div class="price-panel__header">
+                <span class="price-panel__brand price-panel__brand--tcg">TCGPlayer</span>
+                <span class="price-panel__region">🇺🇸 US</span>
+              </div>
+
+              @for (variant of tcgVariants(); track variant.label) {
+                <div class="price-variant">
+                  <span class="price-variant__label">{{ variant.label }}</span>
+                  <div class="price-variant__values">
+                    <span class="price-tag price-tag--market" title="Market price">
+                      {{ formatPrice(variant.market) }}
+                    </span>
+                    <span class="price-tag price-tag--low" title="Low price">
+                      Low: {{ formatPrice(variant.low) }}
+                    </span>
+                    <span class="price-tag price-tag--high" title="High price">
+                      High: {{ formatPrice(variant.high) }}
+                    </span>
+                  </div>
+                </div>
+              }
+
+              @if (tcgUrl()) {
+                <a class="price-panel__link" [href]="tcgUrl()" target="_blank" rel="noopener noreferrer">
+                  View on TCGPlayer ↗
+                </a>
+              }
+            </div>
+          }
+
+          <!-- CardMarket panel -->
+          @if (cmPrices()) {
+            <div class="price-panel">
+              <div class="price-panel__header">
+                <span class="price-panel__brand price-panel__brand--cm">CardMarket</span>
+                <span class="price-panel__region">🇪🇺 EU</span>
+              </div>
+
+              <div class="price-variant">
+                <span class="price-variant__label">Trend</span>
+                <div class="price-variant__values">
+                  <span class="price-tag price-tag--market">
+                    {{ formatEur(cmPrices()?.trendPrice) }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="price-variant">
+                <span class="price-variant__label">Low listing</span>
+                <div class="price-variant__values">
+                  <span class="price-tag price-tag--low">
+                    {{ formatEur(cmPrices()?.lowPrice) }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="price-variant">
+                <span class="price-variant__label">Avg. sold (30d)</span>
+                <div class="price-variant__values">
+                  <span class="price-tag price-tag--high">
+                    {{ formatEur(cmPrices()?.avg30) }}
+                  </span>
+                </div>
+              </div>
+
+              @if (cmUrl()) {
+                <a class="price-panel__link" [href]="cmUrl()" target="_blank" rel="noopener noreferrer">
+                  View on CardMarket ↗
+                </a>
+              }
+            </div>
+          }
+
+          <!-- LigaPokemon panel -->
+          @if (ligaPrices()) {
+            <div class="price-panel">
+              <div class="price-panel__header">
+                <span class="price-panel__brand price-panel__brand--liga">LigaPokemon</span>
+                <span class="price-panel__region">🇧🇷 BR</span>
+              </div>
+
+              <div class="price-variant">
+                <span class="price-variant__label">Min. listing</span>
+                <div class="price-variant__values">
+                  <span class="price-tag price-tag--low">
+                    {{ formatBrl(ligaPrices()?.minPrice) }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="price-variant">
+                <span class="price-variant__label">Average</span>
+                <div class="price-variant__values">
+                  <span class="price-tag price-tag--market">
+                    {{ formatBrl(ligaPrices()?.avgPrice) }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="price-variant">
+                <span class="price-variant__label">Max. listing</span>
+                <div class="price-variant__values">
+                  <span class="price-tag price-tag--high">
+                    {{ formatBrl(ligaPrices()?.maxPrice) }}
+                  </span>
+                </div>
+              </div>
+
+              @if (ligaUrl()) {
+                <a class="price-panel__link" [href]="ligaUrl()" target="_blank" rel="noopener noreferrer">
+                  View on LigaPokemon ↗
+                </a>
+              }
+            </div>
+          }
+
+        </div>
+      }
+    </div>
+
+    <!-- Marketplace links -->
+    @if (!loadingLinks()) {
+      <div class="marketplace-section">
+        <h2 class="section-title">Search on Marketplaces</h2>
+        <div class="marketplace-grid">
+          @for (link of marketplaceLinks(); track link.marketplace) {
+            <a class="marketplace-card" [href]="link.url" target="_blank" rel="noopener noreferrer">
+              <div class="marketplace-card__top">
+                <span class="marketplace-card__name">{{ link.marketplace }}</span>
+                <span class="marketplace-card__region">{{ regionLabels[link.region] ?? link.region }}</span>
+              </div>
+              <span class="marketplace-card__action">Search listings ↗</span>
+            </a>
+          }
+        </div>
+      </div>
+
+      <div class="marketplace-section">
+        <h2 class="section-title">Price Trackers</h2>
+        <div class="marketplace-grid">
+          @for (link of trackerLinks(); track link.marketplace) {
+            <a class="marketplace-card" [href]="link.url" target="_blank" rel="noopener noreferrer">
+              <div class="marketplace-card__top">
+                <span class="marketplace-card__name">{{ link.marketplace }}</span>
+                <span class="marketplace-card__region">{{ regionLabels[link.region] ?? link.region }}</span>
+              </div>
+              <span class="marketplace-card__action">Check tracker ↗</span>
+            </a>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</section>

@@ -1,0 +1,34 @@
+<section class="collection-detail">
+  <div class="collection-detail__container">
+    <button class="back-btn" (click)="goBack()">← All Collections</button>
+
+    <header class="collection-detail__header">
+      <h1 class="collection-detail__title">{{ setName() || 'Loading...' }}</h1>
+      @if (!loading()) {
+        <span class="collection-detail__count">{{ cards().length }} cards</span>
+      }
+    </header>
+
+    @if (loading()) {
+      <div class="collection-detail__loading">Loading cards...</div>
+    } @else {
+      <ul class="card-grid">
+        @for (card of cards(); track card.id) {
+          <li class="card-item">
+            <img class="card-item__img" [src]="card.images.small" [alt]="card.name" />
+            <div class="card-item__info">
+              <span class="card-item__number">#{{ card.number }}</span>
+              <span class="card-item__name">{{ card.name }}</span>
+              @if (card.rarity) {
+                <span class="card-item__rarity">{{ card.rarity }}</span>
+              }
+            </div>
+            <button class="card-item__btn" (click)="checkPrices(card)">
+              Check Prices
+            </button>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</section>

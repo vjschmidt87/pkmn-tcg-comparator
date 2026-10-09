@@ -1,0 +1,260 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+.prices-page {
+  &__container {
+    @include m.content-container;
+    max-width: 860px;
+    padding-bottom: v.$space-16;
+  }
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-family: v.$font-primary;
+  font-size: v.$font-size-sm;
+  font-weight: v.$font-weight-medium;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: v.$space-6;
+  display: inline-flex;
+  align-items: center;
+  gap: v.$space-1;
+  transition: color v.$transition-fast;
+
+  &:hover { color: var(--color-primary-hover); }
+}
+
+// ─── Card hero ────────────────────────────────────────────────────────────────
+.card-hero {
+  @include m.card-surface;
+  padding: v.$space-6;
+  display: flex;
+  gap: v.$space-6;
+  align-items: center;
+  margin-bottom: v.$space-8;
+
+  @include m.mobile {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  &__img {
+    width: 120px;
+    border-radius: v.$radius-md;
+    box-shadow: v.$shadow-md;
+    flex-shrink: 0;
+  }
+
+  &__name {
+    font-size: v.$font-size-2xl;
+    font-weight: v.$font-weight-bold;
+    margin-bottom: v.$space-2;
+  }
+
+  &__meta {
+    font-size: v.$font-size-sm;
+    color: var(--color-text-secondary);
+    font-family: v.$font-mono;
+  }
+}
+
+// ─── Section title ────────────────────────────────────────────────────────────
+.section-title {
+  font-size: v.$font-size-xs;
+  font-weight: v.$font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-text-muted);
+  margin-bottom: v.$space-4;
+}
+
+// ─── Loading state ────────────────────────────────────────────────────────────
+.loading-state {
+  display: flex;
+  align-items: center;
+  gap: v.$space-3;
+  color: var(--color-text-muted);
+  font-size: v.$font-size-sm;
+  font-style: italic;
+  padding: v.$space-6 0;
+
+  &__spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--color-border);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.unavailable-note {
+  font-size: v.$font-size-sm;
+  color: var(--color-text-muted);
+  font-style: italic;
+  padding: v.$space-4 0 v.$space-6;
+}
+
+// ─── Live prices ──────────────────────────────────────────────────────────────
+.live-prices {
+  margin-bottom: v.$space-10;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: v.$space-5;
+  }
+}
+
+.price-panel {
+  @include m.card-surface;
+  padding: v.$space-5;
+
+  &__header {
+    @include m.flex-between;
+    margin-bottom: v.$space-5;
+    padding-bottom: v.$space-4;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  &__brand {
+    font-size: v.$font-size-md;
+    font-weight: v.$font-weight-bold;
+
+    &--tcg  { color: #1a73e8; }
+    &--cm   { color: #e84040; }
+    &--liga { color: #16a34a; }
+  }
+
+  &__region {
+    font-size: v.$font-size-xs;
+    color: var(--color-text-muted);
+  }
+
+  &__link {
+    display: block;
+    margin-top: v.$space-5;
+    padding-top: v.$space-4;
+    border-top: 1px solid var(--color-border);
+    font-size: v.$font-size-sm;
+    font-weight: v.$font-weight-medium;
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color v.$transition-fast;
+
+    &:hover { color: var(--color-primary-hover); }
+  }
+}
+
+.price-variant {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-2;
+  padding: v.$space-3 0;
+
+  & + & {
+    border-top: 1px solid var(--color-border);
+  }
+
+  &__label {
+    font-size: v.$font-size-xs;
+    font-weight: v.$font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-secondary);
+  }
+
+  &__values {
+    display: flex;
+    flex-wrap: wrap;
+    gap: v.$space-2;
+    align-items: center;
+  }
+}
+
+.price-tag {
+  font-family: v.$font-mono;
+  font-size: v.$font-size-sm;
+  font-weight: v.$font-weight-medium;
+  border-radius: v.$radius-sm;
+  padding: v.$space-1 v.$space-2;
+
+  &--market {
+    background: var(--color-primary-muted);
+    color: var(--color-primary);
+    font-size: v.$font-size-md;
+    font-weight: v.$font-weight-bold;
+    padding: v.$space-1 v.$space-3;
+  }
+
+  &--low {
+    background: rgba(34, 197, 94, 0.12);
+    color: #16a34a;
+    font-size: v.$font-size-xs;
+  }
+
+  &--high {
+    background: rgba(249, 115, 22, 0.12);
+    color: #c2410c;
+    font-size: v.$font-size-xs;
+  }
+}
+
+// ─── Marketplace grid ─────────────────────────────────────────────────────────
+.marketplace-section {
+  margin-bottom: v.$space-8;
+}
+
+.marketplace-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: v.$space-3;
+}
+
+.marketplace-card {
+  @include m.card-surface;
+  @include m.flex-column;
+  padding: v.$space-4;
+  text-decoration: none;
+  color: var(--color-text-primary);
+  gap: v.$space-3;
+  transition: box-shadow v.$transition-fast, transform v.$transition-fast;
+
+  &:hover {
+    box-shadow: v.$shadow-md;
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+
+  &__top {
+    @include m.flex-between;
+    gap: v.$space-2;
+  }
+
+  &__name {
+    font-size: v.$font-size-sm;
+    font-weight: v.$font-weight-semibold;
+    @include m.truncate;
+  }
+
+  &__region {
+    font-size: v.$font-size-xs;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+
+  &__action {
+    font-size: v.$font-size-xs;
+    color: var(--color-primary);
+    font-weight: v.$font-weight-medium;
+  }
+}

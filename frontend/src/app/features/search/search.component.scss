@@ -1,0 +1,193 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+.search-page {
+  @include m.content-container;
+
+  &__header {
+    text-align: center;
+    margin-bottom: v.$space-10;
+  }
+
+  &__title {
+    font-size: v.$font-size-3xl;
+    font-weight: v.$font-weight-bold;
+    color: var(--color-text-primary);
+    margin-bottom: v.$space-3;
+  }
+
+  &__subtitle {
+    font-size: v.$font-size-md;
+    color: var(--color-text-secondary);
+  }
+
+  &__container {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+}
+
+.search-box {
+  position: relative;
+  margin-bottom: v.$space-8;
+
+  &__field {
+    position: relative;
+  }
+
+  &__input {
+    @include m.input-base;
+    padding-right: v.$space-10;
+    font-size: v.$font-size-lg;
+  }
+
+  &__icon {
+    position: absolute;
+    right: v.$space-4;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: v.$font-size-lg;
+    pointer-events: none;
+
+    &--loading {
+      animation: spin 1s linear infinite;
+    }
+  }
+
+  &__suggestions {
+    position: absolute;
+    top: calc(100% + v.$space-1);
+    left: 0;
+    right: 0;
+    z-index: 50;
+    @include m.card-surface;
+    border-radius: v.$radius-lg;
+    overflow: hidden;
+    max-height: 400px;
+    overflow-y: auto;
+    list-style: none;
+  }
+}
+
+.suggestion {
+  @include m.flex-between;
+  gap: v.$space-3;
+  padding: v.$space-3 v.$space-4;
+  cursor: pointer;
+  transition: background v.$transition-fast;
+
+  &:hover {
+    background: var(--color-surface-alt);
+  }
+
+  &__img {
+    width: 40px;
+    height: 56px;
+    object-fit: contain;
+    flex-shrink: 0;
+    border-radius: v.$radius-sm;
+  }
+
+  &__info {
+    @include m.flex-column;
+    gap: v.$space-1;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__name {
+    font-weight: v.$font-weight-semibold;
+    @include m.truncate;
+  }
+
+  &__meta {
+    font-size: v.$font-size-xs;
+    color: var(--color-text-muted);
+    font-family: v.$font-mono;
+  }
+
+  &__rarity {
+    font-size: v.$font-size-xs;
+    color: var(--color-tag-text);
+    background: var(--color-tag-bg);
+    border-radius: v.$radius-full;
+    padding: 2px v.$space-2;
+    align-self: flex-start;
+  }
+}
+
+.selected-card {
+  @include m.card-surface;
+  padding: v.$space-6;
+  display: flex;
+  gap: v.$space-6;
+  align-items: flex-start;
+
+  @include m.mobile {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  &__img {
+    width: 160px;
+    border-radius: v.$radius-md;
+    box-shadow: v.$shadow-md;
+    flex-shrink: 0;
+  }
+
+  &__details {
+    @include m.flex-column;
+    gap: v.$space-3;
+    flex: 1;
+  }
+
+  &__name {
+    font-size: v.$font-size-2xl;
+    font-weight: v.$font-weight-bold;
+  }
+
+  &__set {
+    font-size: v.$font-size-sm;
+    color: var(--color-text-secondary);
+    font-family: v.$font-mono;
+  }
+
+  &__rarity {
+    font-size: v.$font-size-sm;
+    color: var(--color-tag-text);
+    background: var(--color-tag-bg);
+    border-radius: v.$radius-full;
+    padding: v.$space-1 v.$space-3;
+    align-self: flex-start;
+
+    @include m.mobile {
+      align-self: center;
+    }
+  }
+}
+
+.btn {
+  @include m.btn-base;
+
+  &--primary {
+    background: var(--color-primary);
+    color: #fff;
+    padding: v.$space-3 v.$space-6;
+    font-size: v.$font-size-md;
+    margin-top: v.$space-2;
+    align-self: flex-start;
+
+    &:not(:disabled):hover {
+      background: var(--color-primary-hover);
+    }
+
+    @include m.mobile {
+      align-self: center;
+    }
+  }
+}
+
+@keyframes spin {
+  to { transform: translateY(-50%) rotate(360deg); }
+}

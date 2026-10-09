@@ -1,0 +1,58 @@
+<section class="search-page">
+  <div class="search-page__container">
+    <header class="search-page__header">
+      <h1 class="search-page__title">Find a Card</h1>
+      <p class="search-page__subtitle">Type at least 3 characters to search across all Pokémon TCG cards</p>
+    </header>
+
+    <div class="search-box">
+      <div class="search-box__field">
+        <input
+          class="search-box__input"
+          type="text"
+          placeholder="e.g. Charizard, Pikachu, sv3 001..."
+          [value]="query()"
+          (input)="onQueryChange($any($event.target).value)"
+          (blur)="hideSuggestions()"
+          autocomplete="off"
+        />
+        <span class="search-box__icon" [class.search-box__icon--loading]="loading()">
+          @if (loading()) { ⏳ } @else { 🔍 }
+        </span>
+      </div>
+
+      @if (showSuggestions()) {
+        <ul class="search-box__suggestions">
+          @for (card of suggestions(); track card.id) {
+            <li class="suggestion" (mousedown)="selectCard(card)">
+              <img class="suggestion__img" [src]="card.images.small" [alt]="card.name" />
+              <div class="suggestion__info">
+                <span class="suggestion__name">{{ card.name }}</span>
+                <span class="suggestion__meta">{{ card.set.name }} · #{{ card.number }}</span>
+                @if (card.rarity) {
+                  <span class="suggestion__rarity">{{ card.rarity }}</span>
+                }
+              </div>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+
+    @if (selectedCard(); as card) {
+      <div class="selected-card">
+        <img class="selected-card__img" [src]="card.images.large" [alt]="card.name" />
+        <div class="selected-card__details">
+          <h2 class="selected-card__name">{{ card.name }}</h2>
+          <p class="selected-card__set">{{ card.set.name }} · #{{ card.number }}</p>
+          @if (card.rarity) {
+            <span class="selected-card__rarity">{{ card.rarity }}</span>
+          }
+          <button class="btn btn--primary" (click)="checkPrices()">
+            Check Prices
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</section>

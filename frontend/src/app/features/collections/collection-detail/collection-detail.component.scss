@@ -1,0 +1,125 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+.collection-detail {
+  &__container {
+    @include m.content-container;
+  }
+
+  &__header {
+    @include m.flex-between;
+    margin-bottom: v.$space-8;
+    flex-wrap: wrap;
+    gap: v.$space-3;
+  }
+
+  &__title {
+    font-size: v.$font-size-2xl;
+    font-weight: v.$font-weight-bold;
+  }
+
+  &__count {
+    font-size: v.$font-size-sm;
+    color: var(--color-text-muted);
+    background: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    border-radius: v.$radius-full;
+    padding: v.$space-1 v.$space-3;
+    font-family: v.$font-mono;
+  }
+
+  &__loading {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-style: italic;
+    padding: v.$space-16 0;
+  }
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-family: v.$font-primary;
+  font-size: v.$font-size-sm;
+  font-weight: v.$font-weight-medium;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: v.$space-6;
+  display: inline-flex;
+  align-items: center;
+  gap: v.$space-1;
+  transition: color v.$transition-fast;
+
+  &:hover {
+    color: var(--color-primary-hover);
+  }
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: v.$space-4;
+  list-style: none;
+}
+
+.card-item {
+  @include m.card-surface;
+  @include m.flex-column;
+  align-items: center;
+  padding: v.$space-4;
+  gap: v.$space-3;
+  text-align: center;
+  transition: box-shadow v.$transition-fast, transform v.$transition-fast;
+
+  &:hover {
+    box-shadow: v.$shadow-md;
+    transform: translateY(-2px);
+  }
+
+  &__img {
+    width: 120px;
+    border-radius: v.$radius-sm;
+    box-shadow: v.$shadow-sm;
+  }
+
+  &__info {
+    @include m.flex-column;
+    gap: v.$space-1;
+    flex: 1;
+    width: 100%;
+  }
+
+  &__number {
+    font-size: v.$font-size-xs;
+    color: var(--color-text-muted);
+    font-family: v.$font-mono;
+  }
+
+  &__name {
+    font-size: v.$font-size-sm;
+    font-weight: v.$font-weight-semibold;
+  }
+
+  &__rarity {
+    font-size: v.$font-size-xs;
+    color: var(--color-tag-text);
+    background: var(--color-tag-bg);
+    border-radius: v.$radius-full;
+    padding: 2px v.$space-2;
+    display: inline-block;
+  }
+
+  &__btn {
+    @include m.btn-base;
+    background: var(--color-primary);
+    color: #fff;
+    width: 100%;
+    font-size: v.$font-size-xs;
+    padding: v.$space-2 v.$space-3;
+
+    &:not(:disabled):hover {
+      background: var(--color-primary-hover);
+    }
+  }
+}

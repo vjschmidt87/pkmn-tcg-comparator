@@ -1,0 +1,31 @@
+services:
+  backend:
+    build: ./backend
+    container_name: pkmn-tcg-comparator-backend
+    ports:
+      - "8097:8097"
+    environment:
+      POKEMON_TCG_API_KEY: ${POKEMON_TCG_API_KEY:-}
+    networks:
+      - pkmn-net
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8097/api/sets"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  frontend:
+    build: ./frontend
+    container_name: pkmn-tcg-comparator-frontend
+    ports:
+      - "4217:80"
+    depends_on:
+      backend:
+        condition: service_started
+    networks:
+      - pkmn-net
+
+networks:
+  pkmn-net:
+    driver: bridge

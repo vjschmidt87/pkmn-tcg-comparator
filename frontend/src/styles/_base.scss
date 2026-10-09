@@ -1,0 +1,91 @@
+@use 'variables' as v;
+
+:root {
+  // ─── Light theme ────────────────────────────────────────────────────────────
+  --color-bg:            #f8f9fc;
+  --color-surface:       #ffffff;
+  --color-surface-alt:   #f1f3f8;
+  --color-border:        #e2e6ef;
+  --color-primary:       #3b5bdb;
+  --color-primary-hover: #2f4ac7;
+  --color-primary-muted: rgba(59, 91, 219, 0.12);
+  --color-accent:        #e03131;
+  --color-text-primary:  #1a1d2e;
+  --color-text-secondary:#4a5068;
+  --color-text-muted:    #9399b2;
+  --color-success:       #2f9e44;
+  --color-warning:       #e67700;
+  --color-tag-bg:        #edf2ff;
+  --color-tag-text:      #3b5bdb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg:            #0f1117;
+    --color-surface:       #181b27;
+    --color-surface-alt:   #1e2130;
+    --color-border:        #2c3050;
+    --color-primary:       #748ffc;
+    --color-primary-hover: #91a7ff;
+    --color-primary-muted: rgba(116, 143, 252, 0.15);
+    --color-accent:        #ff6b6b;
+    --color-text-primary:  #e8eaf6;
+    --color-text-secondary:#a0a8cc;
+    --color-text-muted:    #5c638a;
+    --color-success:       #51cf66;
+    --color-warning:       #ffd43b;
+    --color-tag-bg:        #1e2347;
+    --color-tag-text:      #748ffc;
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-bg:            #0f1117;
+  --color-surface:       #181b27;
+  --color-surface-alt:   #1e2130;
+  --color-border:        #2c3050;
+  --color-primary:       #748ffc;
+  --color-primary-hover: #91a7ff;
+  --color-primary-muted: rgba(116, 143, 252, 0.15);
+  --color-accent:        #ff6b6b;
+  --color-text-primary:  #e8eaf6;
+  --color-text-secondary:#a0a8cc;
+  --color-text-muted:    #5c638a;
+  --color-success:       #51cf66;
+  --color-warning:       #ffd43b;
+  --color-tag-bg:        #1e2347;
+  --color-tag-text:      #748ffc;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: v.$font-primary;
+  font-size: v.$font-size-md;
+  color: var(--color-text-primary);
+  background: var(--color-bg);
+  min-height: 100vh;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}

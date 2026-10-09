@@ -1,0 +1,10 @@
+server:
+  port: 8097
+
+spring:
+  cache:
+    type: none
+
+logging:
+  level:
+    com.pkmncomparator: INFO

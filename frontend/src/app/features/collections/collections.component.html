@@ -1,0 +1,30 @@
+<section class="collections-page">
+  <div class="collections-page__container">
+    <header class="collections-page__header">
+      <h1 class="collections-page__title">All Collections</h1>
+      <p class="collections-page__subtitle">Browse every Pokémon TCG set ever released</p>
+    </header>
+
+    @if (loading()) {
+      <div class="collections-page__loading">Loading collections...</div>
+    } @else {
+      <ul class="set-grid">
+        @for (set of sets(); track set.id) {
+          <li class="set-card" (click)="openSet(set.id)">
+            @if (set.images && set.images.logo) {
+              <img class="set-card__logo" [src]="set.images.logo" [alt]="set.name" />
+            }
+            <div class="set-card__info">
+              <span class="set-card__name">{{ set.name }}</span>
+              <span class="set-card__meta">{{ set.series }}</span>
+              <span class="set-card__meta">{{ set.printedTotal }} cards · {{ set.releaseDate }}</span>
+            </div>
+            @if (set.images && set.images.symbol) {
+              <img class="set-card__symbol" [src]="set.images.symbol" [alt]="" />
+            }
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</section>
